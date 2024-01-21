@@ -20,7 +20,7 @@ public class BankCard
     @Column(name = "numberCard")
     String NumberCard;
     @Column(name = "cardcv")
-    String CardCV;
+    String CardCVV;
     @Column(name = "expirationdate")
     String ExpirationDate;
     @Column(name = "nameownercard")
