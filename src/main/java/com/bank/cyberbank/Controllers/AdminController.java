@@ -13,6 +13,6 @@ public class AdminController
 {
     public void CheckUserInfo()
     {
-        
+
     }
 }

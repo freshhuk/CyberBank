@@ -1,7 +1,6 @@
 package com.bank.cyberbank.Services;
 
 import com.bank.cyberbank.Domain.Entity.BankCard;
-import com.bank.cyberbank.Domain.Models.BankCardDTO;
 import com.bank.cyberbank.Repositories.BankCardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ public class BankCardService
         this.bankCardRepository = bankCardRepository;
     }
     //Method for creating bankcard for user
-    public void CreateBankCard(String NameOwnerCard, String LastNameOwnerCard)
+    public String CreateBankCard(String NameOwnerCard, String LastNameOwnerCard)
     {
         try{
             BankCard bank_card = new BankCard();
@@ -34,18 +33,36 @@ public class BankCardService
             }
 
             bankCardRepository.Add(bank_card);
+            return "Successful";
         }
         catch (Exception ex)
         {
-           System.out.println("Exception - "+ex);
+            System.out.println("Exception - "+ex);
+            return "error";
         }
     }
-    public void RemoveBankCard()
+    public String RemoveBankCard(String BankCard_Number)
+    {
+        try{
+            if(BankCard_Number != null)
+            {
+                var bank_card = bankCardRepository.GetBankCardByNumber(BankCard_Number);
+                bankCardRepository.Delete(bank_card.getId());
+                return "Successful";
+            }
+            return "BankCard_Number is null";
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Exception - "+ex);
+            return "error";
+        }
+    }
+        //todo
+    public List<BankCard> GetAllMyCard()
     {
 
     }
-
-
 
     //We get ExpirationDate for bankcard
     private String ExpirationDateCard()
@@ -65,17 +82,18 @@ public class BankCardService
         return "" + cvv;
 
     }
-    //the method create number card(length
-    //todo
+    //the method create number card
     private String CreateNumberBankCard()
     {
         Random random = new Random();
-        int numberPart1 = random.nextInt(4499);
-        int numberPart2 = random.nextInt(9999);
-        int numberPart3 = random.nextInt(9999);
-        int numberPart4 = random.nextInt(9999);
+        StringBuilder number = new StringBuilder();
+        for(int i = 0; i < 4; i++)
+        {
+            int numberPart = random.nextInt(500)+4000;
+            number.append(numberPart).append(" ");
+        }
 
-        return "" + number;
+        return number.toString();
     }
 
 }
