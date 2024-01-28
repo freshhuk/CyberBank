@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -58,11 +59,25 @@ public class BankCardService
             return "error";
         }
     }
-        //todo
-    public List<BankCard> GetAllMyCard()
+
+    public List<BankCard> GetAllCard()
+    {
+        try{
+            return bankCardRepository.AllCards();
+        }
+        catch (Exception ex)
+        {
+            System.out.println(ex+"");
+            return null;
+        }
+    }
+//todo
+    public String UpdateOwnerCard()
     {
 
     }
+
+
 
     //We get ExpirationDate for bankcard
     private String ExpirationDateCard()
