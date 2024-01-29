@@ -1,6 +1,7 @@
 package com.bank.cyberbank.Services;
 
 import com.bank.cyberbank.Domain.Entity.BankCard;
+import com.bank.cyberbank.Domain.Models.BankCardDTO;
 import com.bank.cyberbank.Repositories.BankCardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ public class BankCardService
         catch (Exception ex)
         {
             System.out.println("Exception - "+ex);
-            return "error";
+            return "Error";
         }
     }
     public String RemoveBankCard(String BankCard_Number)
@@ -56,7 +57,7 @@ public class BankCardService
         catch (Exception ex)
         {
             System.out.println("Exception - "+ex);
-            return "error";
+            return "Error";
         }
     }
 
@@ -67,14 +68,26 @@ public class BankCardService
         }
         catch (Exception ex)
         {
-            System.out.println(ex+"");
+            System.out.println("Exception - " + ex);
             return null;
         }
     }
-//todo
-    public String UpdateOwnerCard()
-    {
 
+    public String UpdateOwnerCard(BankCardDTO update_card)
+    {
+        try{
+            if(update_card != null)
+            {
+                bankCardRepository.Update(update_card);
+                return "Successful";
+            }
+            return "Model is null";
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Exception - " + ex);
+            return "Error";
+        }
     }
 
 
