@@ -14,6 +14,8 @@ public class BankService
     {
         this.repository = repository;
     }
+
+
     //Method for loading your money in your bank card
     public String LoadOwnMoney(String numberBankCard, int loadMoney)
     {
@@ -21,8 +23,8 @@ public class BankService
             var bankCard = repository.GetBankCardByNumber(numberBankCard);
             if(bankCard != null)
             {
-                int newCardMoney = bankCard.getBalance() + loadMoney;
-                bankCard.setBalance(newCardMoney);
+                int updatedCardMoney = bankCard.getBalance() + loadMoney;
+                bankCard.setBalance(updatedCardMoney);
                 return "Successful";
             }
             return "Bank card not found";
@@ -34,7 +36,7 @@ public class BankService
         }
     }
     //Method for Withdraw money from your bank card
-    public void WithdrawMoneyFromCard()
+    public void WithdrawMoneyFromCard(String numberBankCard, int withdrawMoney)
     {
 
     }
