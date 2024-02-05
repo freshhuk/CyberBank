@@ -36,12 +36,25 @@ public class BankService
         }
     }
     //Method for Withdraw money from your bank card
-    public void WithdrawMoneyFromCard(String numberBankCard, int withdrawMoney)
+    public String WithdrawMoneyFromCard(String numberBankCard, int withdrawMoney)
     {
-
+        try{
+            var bankCard = repository.GetBankCardByNumber(numberBankCard);
+            if(bankCard != null)
+            {
+                int updatedCardMoney = bankCard.getBalance() - withdrawMoney;
+                bankCard.setBalance(updatedCardMoney);
+                return "Successful";
+            }
+            return "Bank card not found";
+        }
+        catch (Exception ex){
+            System.out.println("Exception - " + ex);
+            return "Error";
+        }
     }
     //Method for loading your money in other card
-    public void LoadOwnMoneyInOtherCard()
+    public void LoadOwnMoneyInOtherCard(String ownNumberBankCard,String numberBankCard,int loadMoney)
     {
 
     }
