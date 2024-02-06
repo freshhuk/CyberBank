@@ -20,13 +20,13 @@ public class BankCardService
         this.bankCardRepository = bankCardRepository;
     }
     //Method for creating bankcard for user
-    public String CreateBankCard(String NameOwnerCard, String LastNameOwnerCard)
+    public String CreateBankCard(String nameOwnerCard, String lastNameOwnerCard)
     {
         try{
             BankCard bank_card = new BankCard();
             {
-                bank_card.setNameOwnerCard(NameOwnerCard);
-                bank_card.setLastNameOwnerCard(LastNameOwnerCard);
+                bank_card.setNameOwnerCard(nameOwnerCard);
+                bank_card.setLastNameOwnerCard(lastNameOwnerCard);
 
                 bank_card.setBalance(0);
                 bank_card.setExpirationDate(ExpirationDateCard());
