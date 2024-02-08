@@ -1,5 +1,6 @@
 package com.bank.cyberbank.Services;
 
+import com.bank.cyberbank.Domain.Entity.BankCard;
 import com.bank.cyberbank.Repositories.BankCardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,9 +61,16 @@ public class BankService
     }
 
     //Information your bank card
-    public void BankCardInfo()
+    public BankCard BankCardInfo(String numberBankCard)
     {
-
+        try{
+            return repository.GetBankCardByNumber(numberBankCard);
+        }
+        catch (Exception ex)
+        {
+            System.out.println("Exception - " + ex);
+            return null;
+        }
     }
 
 

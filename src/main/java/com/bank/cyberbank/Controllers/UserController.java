@@ -1,14 +1,12 @@
 package com.bank.cyberbank.Controllers;
 
 
+import com.bank.cyberbank.Domain.Entity.BankCard;
 import com.bank.cyberbank.Services.BankCardService;
 import com.bank.cyberbank.Services.BankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /*
 
@@ -47,5 +45,16 @@ public class UserController
         else{
             return ResponseEntity.badRequest().body("nameOwnerCard or lastNameOwnerCard is null");
         }
+    }
+    @GetMapping("/bankCardInfo")
+    public ResponseEntity<BankCard> informationOfBankCard(@RequestParam String nameOwnerCard){
+        if(nameOwnerCard!=null){
+            var bankCard = bankService.BankCardInfo(nameOwnerCard);
+            return (bankCard != null) ? ResponseEntity.ok(bankCard) : ResponseEntity.badRequest().build();
+        }
+        else{
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 }
