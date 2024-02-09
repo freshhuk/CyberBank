@@ -53,8 +53,24 @@ public class UserController
             return (bankCard != null) ? ResponseEntity.ok(bankCard) : ResponseEntity.badRequest().build();
         }
         else{
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(null);
         }
 
+    }
+    @PostMapping("/loadMoney")
+    public ResponseEntity<String> loadMoneyToBankCard(
+            @RequestParam String nameOwnerCard, @RequestParam String money
+    ){
+        if(nameOwnerCard != null){
+            int updateMoney = Integer.parseInt(money);
+            var resulr = bankService.LoadOwnMoney(nameOwnerCard,updateMoney);
+            if(resulr.equals("Successful")){
+                return ResponseEntity.ok().body("Money loaded");
+            }
+            return ResponseEntity.badRequest().body("Error with operation");
+        }
+        else{
+            return ResponseEntity.badRequest().body("Error: Invalid bank card name");
+        }
     }
 }
