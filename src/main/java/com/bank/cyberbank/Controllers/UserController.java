@@ -57,6 +57,7 @@ public class UserController
         }
 
     }
+    //todo
     @PostMapping("/loadMoney")
     public ResponseEntity<String> loadMoneyToBankCard(
             @RequestParam String nameOwnerCard, @RequestParam String money
@@ -66,6 +67,23 @@ public class UserController
             var resulr = bankService.LoadOwnMoney(nameOwnerCard,updateMoney);
             if(resulr.equals("Successful")){
                 return ResponseEntity.ok().body("Money loaded");
+            }
+            return ResponseEntity.badRequest().body("Error with operation");
+        }
+        else{
+            return ResponseEntity.badRequest().body("Error: Invalid bank card name");
+        }
+    }
+    //todo
+    @PostMapping("/withdrawMoney")
+    public ResponseEntity<String> withdrawMoneyFromCard(
+            @RequestParam String nameOwnerCard, @RequestParam String money
+    ){
+        if(nameOwnerCard != null){
+            int updateMoney = Integer.parseInt(money);
+            var resulr = bankService.WithdrawMoneyFromCard(nameOwnerCard,updateMoney);
+            if(resulr.equals("Successful")){
+                return ResponseEntity.ok().body("Money withdraw");
             }
             return ResponseEntity.badRequest().body("Error with operation");
         }
