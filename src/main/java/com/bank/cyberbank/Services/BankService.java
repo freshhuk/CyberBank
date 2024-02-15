@@ -18,6 +18,8 @@ public class BankService
 
 
     //Method for loading your money in your bank card
+    //Todo сделать сохранение денег в бд и их изминение а то сейчас операция
+    // прохожит успешно но деньги не сохраняються
     public String LoadOwnMoney(String numberBankCard, int loadMoney)
     {
         try{
