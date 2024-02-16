@@ -18,16 +18,18 @@ public class BankService
 
 
     //Method for loading your money in your bank card
-    //Todo сделать сохранение денег в бд и их изминение а то сейчас операция
-    // прохожит успешно но деньги не сохраняються
     public String LoadOwnMoney(String numberBankCard, int loadMoney)
     {
         try{
             var bankCard = repository.GetBankCardByNumber(numberBankCard);
             if(bankCard != null)
             {
+                //updating money
                 int updatedCardMoney = bankCard.getBalance() + loadMoney;
                 bankCard.setBalance(updatedCardMoney);
+                //Save changes
+                repository.saveEntity(bankCard);
+
                 return "Successful";
             }
             return "Bank card not found";
@@ -47,6 +49,8 @@ public class BankService
             {
                 int updatedCardMoney = bankCard.getBalance() - withdrawMoney;
                 bankCard.setBalance(updatedCardMoney);
+                //Save changes
+                repository.saveEntity(bankCard);
                 return "Successful";
             }
             return "Bank card not found";
@@ -57,9 +61,32 @@ public class BankService
         }
     }
     //Method for loading your money in other card
-    public void LoadOwnMoneyInOtherCard(String ownNumberBankCard,String numberBankCard,int loadMoney)
+    public String loadOwnMoneyInOtherCard(String ownNumberBankCard, String numberBankCard, int loadMoney)
     {
+        try{
+            if(ownNumberBankCard != null && numberBankCard != null){
+                //Get cards on dadabase
+                var ownBankCard = repository.GetBankCardByNumber(ownNumberBankCard);
+                var anotherBankCard = repository.GetBankCardByNumber(numberBankCard);
 
+                if(ownBankCard != null && anotherBankCard != null){
+
+                    int newBalance = ownBankCard.getBalance() - loadMoney;
+                    ownBankCard.setBalance(newBalance);
+                    repository.saveEntity(ownBankCard);
+
+                    int anotherNewBalanc = anotherBankCard.getBalance() + loadMoney;
+                    anotherBankCard.setBalance(anotherNewBalanc);
+                    repository.saveEntity(anotherBankCard);
+                    return "Successful";
+                }
+            }
+            return "Bank cards not found";
+        }
+        catch (Exception ex){
+            System.out.println("Exception - " + ex);
+            return "Error";
+        }
     }
 
     //Information your bank card

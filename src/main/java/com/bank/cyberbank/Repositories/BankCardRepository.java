@@ -89,4 +89,11 @@ public class BankCardRepository
             return model;
         }
     }
+    public void saveEntity(BankCard bankCard) {
+        try (Session session = factory.openSession()) {
+            session.beginTransaction();
+            session.merge(bankCard); // we use marge for update own entity
+            session.getTransaction().commit();
+        }
+    }
 }
