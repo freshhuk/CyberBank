@@ -78,8 +78,8 @@ public class UserController
             @RequestParam String nameOwnerCard, @RequestParam int money
     ){
         if(nameOwnerCard != null){
-            var resulr = bankService.WithdrawMoneyFromCard(nameOwnerCard,money);
-            if(resulr.equals("Successful")){
+            var result = bankService.WithdrawMoneyFromCard(nameOwnerCard,money);
+            if(result.equals("Successful")){
                 return ResponseEntity.ok().body("Money withdraw");
             }
             return ResponseEntity.badRequest().body("Error with operation");
@@ -88,9 +88,20 @@ public class UserController
             return ResponseEntity.badRequest().body("Error: Invalid bank card name");
         }
     }
-    //Todo
     @PostMapping("/loadMoneyToAtherBankCard")
-    public ResponseEntity<String> loadMoneyToAtherBankCard(){
-
+    public ResponseEntity<String> loadMoneyToAtherBankCard(String nameOwnerCard, String atherNameCard, int money){
+        if(nameOwnerCard != null && atherNameCard != null){
+            var result = bankService.loadOwnMoneyInOtherCard(nameOwnerCard, atherNameCard, money);
+            if(result.equals("Successful")){
+                return ResponseEntity.ok().body("Money loaded at other card");
+            }
+            else if(result.equals("Bank cards not found")){
+                return ResponseEntity.badRequest().body("Error: Bank cards not found");
+            }
+            return ResponseEntity.badRequest().body("Error with operation");
+        }
+        else{
+            return ResponseEntity.badRequest().body("Error: Invalid bank card name");
+        }
     }
 }
