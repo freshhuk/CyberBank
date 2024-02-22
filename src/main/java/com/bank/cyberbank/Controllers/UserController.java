@@ -49,7 +49,7 @@ public class UserController
     @GetMapping("/bankCardInfo")
     public ResponseEntity<BankCard> informationOfBankCard(@RequestParam String nameOwnerCard){
         if(nameOwnerCard!=null){
-            var bankCard = bankService.BankCardInfo(nameOwnerCard);
+            var bankCard = bankService.bankCardInfo(nameOwnerCard);
             return (bankCard != null) ? ResponseEntity.ok(bankCard) : ResponseEntity.badRequest().build();
         }
         else{
@@ -57,7 +57,6 @@ public class UserController
         }
 
     }
-    //todo
     @PostMapping("/loadMoney")
     public ResponseEntity<String> loadMoneyToBankCard(
             @RequestParam String nameOwnerCard, @RequestParam int money
@@ -89,9 +88,9 @@ public class UserController
         }
     }
     @PostMapping("/loadMoneyToAtherBankCard")
-    public ResponseEntity<String> loadMoneyToAtherBankCard(String nameOwnerCard, String atherNameCard, int money){
+    public ResponseEntity<String> loadMoneyToAtherBankCard(@RequestParam String nameOwnerCard, @RequestParam String atherNameCard, int money){
         if(nameOwnerCard != null && atherNameCard != null){
-            var result = bankService.loadOwnMoneyInOtherCard(nameOwnerCard, atherNameCard, money);
+            var result = bankService.loadOwnMoneyInOtherCard(atherNameCard, nameOwnerCard, money);
             if(result.equals("Successful")){
                 return ResponseEntity.ok().body("Money loaded at other card");
             }

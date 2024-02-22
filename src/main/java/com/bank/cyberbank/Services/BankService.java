@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 public class BankService
 {
 
+    private static final String STATUSCODE200_MASSAGE = "Successful";
     private final BankCardRepository repository;
     @Autowired
     public BankService(BankCardRepository repository)
@@ -30,7 +31,7 @@ public class BankService
                 //Save changes
                 repository.saveEntity(bankCard);
 
-                return "Successful";
+                return STATUSCODE200_MASSAGE;
             }
             return "Bank card not found";
         }
@@ -45,13 +46,13 @@ public class BankService
     {
         try{
             var bankCard = repository.GetBankCardByNumber(numberBankCard);
-            if(bankCard != null)
+            if(bankCard != null && checkBalance(bankCard,withdrawMoney ))
             {
                 int updatedCardMoney = bankCard.getBalance() - withdrawMoney;
                 bankCard.setBalance(updatedCardMoney);
                 //Save changes
                 repository.saveEntity(bankCard);
-                return "Successful";
+                return STATUSCODE200_MASSAGE;
             }
             return "Bank card not found";
         }
@@ -61,15 +62,15 @@ public class BankService
         }
     }
     //Method for loading your money in other card
-    public String loadOwnMoneyInOtherCard(String ownNumberBankCard, String numberBankCard, int loadMoney)
+    public String loadOwnMoneyInOtherCard(String ownNumberBankCard, String anotherNumberBankCard, int loadMoney)
     {
         try{
-            if(ownNumberBankCard != null && numberBankCard != null){
+            if(ownNumberBankCard != null && anotherNumberBankCard != null){
                 //Get cards on dadabase
                 var ownBankCard = repository.GetBankCardByNumber(ownNumberBankCard);
-                var anotherBankCard = repository.GetBankCardByNumber(numberBankCard);
+                var anotherBankCard = repository.GetBankCardByNumber(anotherNumberBankCard);
 
-                if(ownBankCard != null && anotherBankCard != null){
+                if(ownBankCard != null && anotherBankCard != null && checkBalance(ownBankCard, loadMoney)){
 
                     int newBalance = ownBankCard.getBalance() - loadMoney;
                     ownBankCard.setBalance(newBalance);
@@ -78,7 +79,7 @@ public class BankService
                     int anotherNewBalanc = anotherBankCard.getBalance() + loadMoney;
                     anotherBankCard.setBalance(anotherNewBalanc);
                     repository.saveEntity(anotherBankCard);
-                    return "Successful";
+                    return STATUSCODE200_MASSAGE;
                 }
             }
             return "Bank cards not found";
@@ -90,7 +91,7 @@ public class BankService
     }
 
     //Information your bank card
-    public BankCard BankCardInfo(String numberBankCard)
+    public BankCard bankCardInfo(String numberBankCard)
     {
         try{
             return repository.GetBankCardByNumber(numberBankCard);
@@ -102,6 +103,14 @@ public class BankService
         }
     }
 
-
+    private boolean checkBalance(BankCard bankCard, int money){
+        try{
+            return bankCard.getBalance() >= money;
+        }
+        catch (Exception ex){
+            System.out.println("Exception - " + ex);
+            return false;
+        }
+    }
 
 }
