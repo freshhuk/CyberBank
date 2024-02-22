@@ -121,7 +121,7 @@ public class BankCardService
             number.append(numberPart).append(" ");
         }
 
-        return number.toString();
+        return number.toString().trim();
     }
 
 }

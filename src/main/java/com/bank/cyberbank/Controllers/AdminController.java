@@ -11,8 +11,17 @@ This class for end point for user
 
 public class AdminController
 {
-    public void CheckUserInfo()
+    public void CheckAllUserInfo()
     {
 
     }
+    public void deleteUser()
+    {
+
+    }
+    public void chaangeUser()
+    {
+
+    }
+
 }
