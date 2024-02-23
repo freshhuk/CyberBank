@@ -13,6 +13,8 @@ import java.util.Random;
 @Service
 public class BankCardService
 {
+    private static final String STATUSCODE200_MASSAGE = "Successful";
+
     private final BankCardRepository bankCardRepository;
     @Autowired
     public BankCardService(BankCardRepository bankCardRepository)
@@ -35,7 +37,7 @@ public class BankCardService
             }
 
             bankCardRepository.Add(bank_card);
-            return "Successful";
+            return STATUSCODE200_MASSAGE;
         }
         catch (Exception ex)
         {
@@ -50,7 +52,7 @@ public class BankCardService
             {
                 var bank_card = bankCardRepository.GetBankCardByNumber(BankCard_Number);
                 bankCardRepository.Delete(bank_card.getId());
-                return "Successful";
+                return STATUSCODE200_MASSAGE;
             }
             return "BankCard_Number is null";
         }
@@ -79,7 +81,7 @@ public class BankCardService
             if(update_card != null)
             {
                 bankCardRepository.Update(update_card);
-                return "Successful";
+                return STATUSCODE200_MASSAGE;
             }
             return "Model is null";
         }

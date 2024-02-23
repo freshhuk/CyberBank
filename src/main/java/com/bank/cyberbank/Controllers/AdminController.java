@@ -19,7 +19,7 @@ public class AdminController
     {
 
     }
-    public void chaangeUser()
+    public void changeDataUser()
     {
 
     }
