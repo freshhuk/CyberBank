@@ -2,12 +2,9 @@ package com.bank.cyberbank.Controllers;
 
 import com.bank.cyberbank.Domain.Entity.BankCard;
 import com.bank.cyberbank.Services.BankCardService;
-import com.bank.cyberbank.Services.BankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,19 +18,16 @@ This class for end point for user
 @RequestMapping("/api/admin")
 public class AdminController
 {
-    private final BankService bankService;
     private final BankCardService bankCardService;
 
     @Autowired
-    public AdminController(BankService bankService, BankCardService bankCardService)
+    public AdminController(BankCardService bankCardService)
     {
-        this.bankService = bankService;
         this.bankCardService = bankCardService;
     }
 
     @GetMapping("/getAllUser")
-    public ResponseEntity<List<BankCard>> checkAllUserInfo()
-    {
+    public ResponseEntity<List<BankCard>> checkAllUserInfo() {
         try{
             List<BankCard> cards =  bankCardService.GetAllCard();
             return ResponseEntity.ok().body(cards);
@@ -43,9 +37,16 @@ public class AdminController
         }
 
     }
-    public void deleteUser()
-    {
+    @DeleteMapping("/deleteUserCard")
+    public ResponseEntity<String> deleteUser(@RequestParam String bankCardNumber) {
+        String result = bankCardService.RemoveBankCard(bankCardNumber);
 
+        if (result.equals("Successful")) {
+            return ResponseEntity.ok().body("User deleted");
+        } else if (result.equals("BankCard_Number is null")) {
+            return ResponseEntity.badRequest().body("User not found");
+        }
+        return ResponseEntity.badRequest().body("Error");
     }
     public void changeDataUser()
     {
