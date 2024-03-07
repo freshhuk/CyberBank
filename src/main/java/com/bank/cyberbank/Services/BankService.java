@@ -6,25 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BankService
-{
+public class BankService {
 
     private static final String STATUSCODE200_MASSAGE = "Successful";
     private final BankCardRepository repository;
+
     @Autowired
-    public BankService(BankCardRepository repository)
-    {
+    public BankService(BankCardRepository repository) {
         this.repository = repository;
     }
 
 
     //Method for loading your money in your bank card
-    public String LoadOwnMoney(String numberBankCard, int loadMoney)
-    {
-        try{
+    public String LoadOwnMoney(String numberBankCard, int loadMoney) {
+        try {
             var bankCard = repository.GetBankCardByNumber(numberBankCard);
-            if(bankCard != null)
-            {
+            if (bankCard != null) {
                 //updating money
                 int updatedCardMoney = bankCard.getBalance() + loadMoney;
                 bankCard.setBalance(updatedCardMoney);
@@ -34,20 +31,17 @@ public class BankService
                 return STATUSCODE200_MASSAGE;
             }
             return "Bank card not found";
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             System.out.println("Exception - " + ex);
             return "Error";
         }
     }
+
     //Method for Withdraw money from your bank card
-    public String WithdrawMoneyFromCard(String numberBankCard, int withdrawMoney)
-    {
-        try{
+    public String WithdrawMoneyFromCard(String numberBankCard, int withdrawMoney) {
+        try {
             var bankCard = repository.GetBankCardByNumber(numberBankCard);
-            if(bankCard != null && checkBalance(bankCard,withdrawMoney ))
-            {
+            if (bankCard != null && checkBalance(bankCard, withdrawMoney)) {
                 int updatedCardMoney = bankCard.getBalance() - withdrawMoney;
                 bankCard.setBalance(updatedCardMoney);
                 //Save changes
@@ -55,22 +49,21 @@ public class BankService
                 return STATUSCODE200_MASSAGE;
             }
             return "Bank card not found";
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println("Exception - " + ex);
             return "Error";
         }
     }
+
     //Method for loading your money in other card
-    public String loadOwnMoneyInOtherCard(String ownNumberBankCard, String anotherNumberBankCard, int loadMoney)
-    {
-        try{
-            if(ownNumberBankCard != null && anotherNumberBankCard != null){
+    public String loadOwnMoneyInOtherCard(String ownNumberBankCard, String anotherNumberBankCard, int loadMoney) {
+        try {
+            if (ownNumberBankCard != null && anotherNumberBankCard != null) {
                 //Get cards on dadabase
                 var ownBankCard = repository.GetBankCardByNumber(ownNumberBankCard);
                 var anotherBankCard = repository.GetBankCardByNumber(anotherNumberBankCard);
 
-                if(ownBankCard != null && anotherBankCard != null && checkBalance(ownBankCard, loadMoney)){
+                if (ownBankCard != null && anotherBankCard != null && checkBalance(ownBankCard, loadMoney)) {
 
                     int newBalance = ownBankCard.getBalance() - loadMoney;
                     ownBankCard.setBalance(newBalance);
@@ -83,31 +76,26 @@ public class BankService
                 }
             }
             return "Bank cards not found";
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println("Exception - " + ex);
             return "Error";
         }
     }
 
     //Information your bank card
-    public BankCard bankCardInfo(String numberBankCard)
-    {
-        try{
+    public BankCard bankCardInfo(String numberBankCard) {
+        try {
             return repository.GetBankCardByNumber(numberBankCard);
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             System.out.println("Exception - " + ex);
             return null;
         }
     }
 
-    private boolean checkBalance(BankCard bankCard, int money){
-        try{
+    private boolean checkBalance(BankCard bankCard, int money) {
+        try {
             return bankCard.getBalance() >= money;
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println("Exception - " + ex);
             return false;
         }

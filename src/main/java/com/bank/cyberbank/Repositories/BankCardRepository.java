@@ -12,8 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class BankCardRepository
-{
+public class BankCardRepository {
     private final SessionFactory factory = new Configuration()
             .configure("hibernateconfig.cfg.xml")
             .addAnnotatedClass(BankCard.class)
@@ -21,12 +20,9 @@ public class BankCardRepository
 
 
     //CRUD
-    public void Add(BankCard card_model)
-    {
-        if(card_model != null)
-        {
-            try(Session session = factory.openSession())
-            {
+    public void Add(BankCard card_model) {
+        if (card_model != null) {
+            try (Session session = factory.openSession()) {
                 session.beginTransaction();
                 session.persist(card_model);
                 session.getTransaction().commit();
@@ -34,43 +30,43 @@ public class BankCardRepository
         }
 
     }
-    public List<BankCard> AllCards()
-    {
-        try(Session session = factory.openSession())
-        {
+
+    public List<BankCard> AllCards() {
+        try (Session session = factory.openSession()) {
             session.beginTransaction();
             var cards = session.createQuery("from BankCard ", BankCard.class).getResultList();
             session.getTransaction().commit();
             return cards;
         }
     }
-    public void Update(BankCardDTO card_model)
-    {
-        try(Session session = factory.openSession())
-        {
+
+    public void Update(BankCardDTO card_model) {
+        try (Session session = factory.openSession()) {
             session.beginTransaction();
-            var card = session.get(BankCard.class ,card_model.getId());
+
+            var card = session.get(BankCard.class, card_model.getId());
+
             card.setNameOwnerCard(card_model.getNameOwnerCard());
             card.setExpirationDate(card_model.getExpirationDate());
             card.setLastNameOwnerCard(card_model.getLastNameOwnerCard());
+
+            session.merge(card); // we use marge for update own entity
             session.getTransaction().commit();
         }
     }
-    public void Delete(int id)
-    {
-        try(Session session = factory.openSession())
-        {
+
+    public void Delete(int id) {
+        try (Session session = factory.openSession()) {
             session.beginTransaction();
-            var card_model = session.get(BankCard.class,id);
+            var card_model = session.get(BankCard.class, id);
             session.remove(card_model);
             session.getTransaction().commit();
         }
     }
+
     //Other method
-    public BankCard GetBankCardByNumber(String numbercard)
-    {
-        try(Session session = factory.openSession())
-        {
+    public BankCard GetBankCardByNumber(String numbercard) {
+        try (Session session = factory.openSession()) {
             session.beginTransaction();
             Query query = session.createQuery("from BankCard where NumberCard =:  NumberCard");
             query.setParameter("NumberCard", numbercard);
@@ -79,16 +75,16 @@ public class BankCardRepository
             return model;
         }
     }
-    public BankCard GetBankCardById(int id)
-    {
-        try(Session session = factory.openSession())
-        {
+
+    public BankCard GetBankCardById(int id) {
+        try (Session session = factory.openSession()) {
             session.beginTransaction();
             var model = session.get(BankCard.class, id);
             session.getTransaction().commit();
             return model;
         }
     }
+
     public void saveEntity(BankCard bankCard) {
         try (Session session = factory.openSession()) {
             session.beginTransaction();
