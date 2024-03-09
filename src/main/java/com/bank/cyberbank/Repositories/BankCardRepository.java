@@ -26,6 +26,8 @@ public class BankCardRepository {
                 session.beginTransaction();
                 session.persist(card_model);
                 session.getTransaction().commit();
+            } catch (Exception ex) {
+                System.out.println("Add method error" + ex);
             }
         }
 
@@ -37,7 +39,11 @@ public class BankCardRepository {
             var cards = session.createQuery("from BankCard ", BankCard.class).getResultList();
             session.getTransaction().commit();
             return cards;
+        } catch (Exception ex) {
+            System.out.println("AllCards method error" + ex);
+            return null;
         }
+
     }
 
     public void Update(BankCardDTO card_model) {
@@ -52,6 +58,8 @@ public class BankCardRepository {
 
             session.merge(card); // we use marge for update own entity
             session.getTransaction().commit();
+        } catch (Exception ex) {
+            System.out.println("Error update" + ex);
         }
     }
 
@@ -61,6 +69,9 @@ public class BankCardRepository {
             var card_model = session.get(BankCard.class, id);
             session.remove(card_model);
             session.getTransaction().commit();
+        }
+        catch (Exception ex) {
+            System.out.println("Delete error" + ex);
         }
     }
 
@@ -73,23 +84,18 @@ public class BankCardRepository {
             BankCard model = (BankCard) query.uniqueResult();
             session.getTransaction().commit();
             return model;
+        }catch (Exception ex) {
+            System.out.println("Error method GetBankCardByNumber" + ex);
+            return null;
         }
     }
-
-    public BankCard GetBankCardById(int id) {
-        try (Session session = factory.openSession()) {
-            session.beginTransaction();
-            var model = session.get(BankCard.class, id);
-            session.getTransaction().commit();
-            return model;
-        }
-    }
-
     public void saveEntity(BankCard bankCard) {
         try (Session session = factory.openSession()) {
             session.beginTransaction();
             session.merge(bankCard); // we use marge for update own entity
             session.getTransaction().commit();
+        }catch (Exception ex) {
+            System.out.println("Error with save" + ex);
         }
     }
 }
