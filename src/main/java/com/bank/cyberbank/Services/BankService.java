@@ -16,7 +16,6 @@ public class BankService {
         this.repository = repository;
     }
 
-
     //Method for loading your money in your bank card
     public String LoadOwnMoney(String numberBankCard, int loadMoney) {
         try {

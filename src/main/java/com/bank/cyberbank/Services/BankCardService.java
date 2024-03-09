@@ -24,8 +24,7 @@ public class BankCardService {
     //Method for creating bankcard for user
     public String CreateBankCard(String nameOwnerCard, String lastNameOwnerCard) {
         try {
-            BankCard bank_card = new BankCard();
-            {
+            BankCard bank_card = new BankCard();{
                 bank_card.setNameOwnerCard(nameOwnerCard);
                 bank_card.setLastNameOwnerCard(lastNameOwnerCard);
 

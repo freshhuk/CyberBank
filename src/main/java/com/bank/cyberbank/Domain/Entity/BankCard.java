@@ -12,8 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Table(name = "bankcards")
-public class BankCard
-{
+public class BankCard {
 
     @Id
     int id;
