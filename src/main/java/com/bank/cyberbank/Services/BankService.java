@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 public class BankService {
 
     private static final String STATUSCODE200_MASSAGE = "Successful";
+    private static final String STATUSCODE404_MASSAGE = "Bank card not found";
     private final BankCardRepository repository;
 
     @Autowired
@@ -29,7 +30,7 @@ public class BankService {
 
                 return STATUSCODE200_MASSAGE;
             }
-            return "Bank card not found";
+            return STATUSCODE404_MASSAGE;
         } catch (Exception ex) {
             System.out.println("Exception - " + ex);
             return "Error";
@@ -47,7 +48,7 @@ public class BankService {
                 repository.saveEntity(bankCard);
                 return STATUSCODE200_MASSAGE;
             }
-            return "Bank card not found";
+            return STATUSCODE404_MASSAGE;
         } catch (Exception ex) {
             System.out.println("Exception - " + ex);
             return "Error";
