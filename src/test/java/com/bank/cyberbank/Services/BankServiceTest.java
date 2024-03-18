@@ -46,7 +46,7 @@ public class BankServiceTest {
     @Test
     void withdrawMoneyFromCardTest(){
         String numberBankCard = "4000 4000 4000 4000";
-        
+
         var testBankCard = new BankCard();
         testBankCard.setBalance(200);
 
