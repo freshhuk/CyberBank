@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  db:
+    image: mysql
+    container_name: mydb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: freshhuk
+      MYSQL_DATABASE: my_db
+      MYSQL_USER: freshhuk
+      MYSQL_PASSWORD: freshhuk
+    ports:
+        - "3307:3306"
+  backend:
+    build: ./
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
