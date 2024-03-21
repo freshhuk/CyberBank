@@ -1,5 +1,5 @@
-FROM eclipse-temurin:21-jdk-alpine
+FROM openjdk:21
 EXPOSE 8080
-VOLUME /tmp
+WORKDIR /app
 COPY out/artifacts/CyberBank_jar/CyberBank.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
