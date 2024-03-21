@@ -11,9 +11,13 @@ services:
       MYSQL_USER: freshhuk
       MYSQL_PASSWORD: freshhuk
     ports:
-        - "3307:3306"
+      - "3307:3306"
+
   backend:
-    build: ./
+    container_name: bankbackend
+    image: openjdk:21
+    build:
+      context: .
     ports:
       - "8080:8080"
     depends_on:
