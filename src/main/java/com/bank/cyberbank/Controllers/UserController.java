@@ -56,10 +56,10 @@ public class UserController {
 
     @PostMapping("/loadMoney")
     public ResponseEntity<String> loadMoneyToBankCard(
-            @RequestParam String nameOwnerCard, @RequestParam int money
+            @RequestParam String bankCardNumber, @RequestParam int money
     ) {
-        if (nameOwnerCard != null) {
-            var resulr = bankService.LoadOwnMoney(nameOwnerCard, money);
+        if (bankCardNumber != null) {
+            var resulr = bankService.LoadOwnMoney(bankCardNumber, money);
             if (resulr.equals("Successful")) {
                 return ResponseEntity.ok().body("Money loaded");
             }
@@ -71,10 +71,10 @@ public class UserController {
 
     @PostMapping("/withdrawMoney")
     public ResponseEntity<String> withdrawMoneyFromCard(
-            @RequestParam String nameOwnerCard, @RequestParam int money
+            @RequestParam String bankCardNumber, @RequestParam int money
     ) {
-        if (nameOwnerCard != null) {
-            var result = bankService.WithdrawMoneyFromCard(nameOwnerCard, money);
+        if (bankCardNumber != null) {
+            var result = bankService.WithdrawMoneyFromCard(bankCardNumber, money);
             if (result.equals("Successful")) {
                 return ResponseEntity.ok().body("Money withdraw");
             }
