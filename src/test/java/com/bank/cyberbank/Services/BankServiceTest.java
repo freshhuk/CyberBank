@@ -18,8 +18,8 @@ public class BankServiceTest {
 
     @Mock
     private BankCardRepository repository;
-    private static final String STATUSCODE200_MASSAGE = "Successful";
-    private static final String STATUSCODE404_MASSAGE = "Bank card not found";
+    private static final String STATUSCODE200_MESSAGE = "Successful";
+    private static final String STATUSCODE404_MESSAGE = "Bank card not found";
     private  BankCard testModelBankCard;
     private BankCard testModelBankCardTwo;
 
@@ -53,7 +53,7 @@ public class BankServiceTest {
         Mockito.when(repository.GetBankCardByNumber(numberBankCard)).thenReturn(new BankCard());
         var result = controller.LoadOwnMoney(numberBankCard,10);
 
-        Assertions.assertEquals(result, STATUSCODE200_MASSAGE);
+        Assertions.assertEquals(result, STATUSCODE200_MESSAGE);
 
     }
     @Test
@@ -63,7 +63,7 @@ public class BankServiceTest {
         Mockito.when(repository.GetBankCardByNumber(numberBankCard)).thenReturn(null);
         var result = controller.LoadOwnMoney(numberBankCard,10);
 
-        Assertions.assertEquals(result, STATUSCODE404_MASSAGE);
+        Assertions.assertEquals(result, STATUSCODE404_MESSAGE);
 
     }
     //Test when we have correct bankCard
@@ -77,7 +77,7 @@ public class BankServiceTest {
         Mockito.when(repository.GetBankCardByNumber(numberBankCard)).thenReturn(testBankCard);
         var result = controller.WithdrawMoneyFromCard(numberBankCard,10);
 
-        Assertions.assertEquals(result, STATUSCODE200_MASSAGE);
+        Assertions.assertEquals(result, STATUSCODE200_MESSAGE);
 
     }
     @Test
@@ -87,7 +87,7 @@ public class BankServiceTest {
         Mockito.when(repository.GetBankCardByNumber(numberBankCard)).thenReturn(null);
         var result = controller.WithdrawMoneyFromCard(numberBankCard,10);
 
-        Assertions.assertEquals(result, STATUSCODE404_MASSAGE);
+        Assertions.assertEquals(result, STATUSCODE404_MESSAGE);
 
     }
     @Test
@@ -101,7 +101,7 @@ public class BankServiceTest {
 
         var result = controller.loadOwnMoneyInOtherCard(numberBankCard,otherNumberBankCard,loadMoney);
 
-        Assertions.assertEquals(result, STATUSCODE200_MASSAGE);
+        Assertions.assertEquals(result, STATUSCODE200_MESSAGE);
         Assertions.assertEquals(testModelBankCard.getBalance(), 900);
         Assertions.assertEquals(testModelBankCardTwo.getBalance(), 1100);
     }

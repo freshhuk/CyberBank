@@ -21,7 +21,7 @@ public class BankCardServiceTest {
 
     @Mock
     private BankCardRepository repository;
-    private static final String STATUSCODE200_MASSAGE = "Successful";
+    private static final String STATUSCODE200_MESSAGE = "Successful";
 
     @Test
     void createBankCardTest() {
@@ -31,7 +31,7 @@ public class BankCardServiceTest {
 
         var result = controller.CreateBankCard(nameOwnerCard, lastNameOwnerCard);
 
-        Assertions.assertEquals(result, STATUSCODE200_MASSAGE);
+        Assertions.assertEquals(result, STATUSCODE200_MESSAGE);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class BankCardServiceTest {
 
         var result = controller.RemoveBankCard(numberBankCard);
 
-        Assertions.assertEquals(result, STATUSCODE200_MASSAGE);
+        Assertions.assertEquals(result, STATUSCODE200_MESSAGE);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class BankCardServiceTest {
 
         var result = controller.UpdateOwnerCard(testModelBankCard);
 
-        Assertions.assertEquals(result, STATUSCODE200_MASSAGE);
+        Assertions.assertEquals(result, STATUSCODE200_MESSAGE);
     }
 }
 

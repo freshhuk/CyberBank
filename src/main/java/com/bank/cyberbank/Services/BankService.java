@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class BankService {
 
-    private static final String STATUSCODE200_MASSAGE = "Successful";
-    private static final String STATUSCODE404_MASSAGE = "Bank card not found";
+    private static final String STATUSCODE200_MESSAGE = "Successful";
+    private static final String STATUSCODE404_MESSAGE = "Bank card not found";
     private final BankCardRepository repository;
 
     @Autowired
@@ -28,9 +28,9 @@ public class BankService {
                 //Save changes
                 repository.saveEntity(bankCard);
 
-                return STATUSCODE200_MASSAGE;
+                return STATUSCODE200_MESSAGE;
             }
-            return STATUSCODE404_MASSAGE;
+            return STATUSCODE404_MESSAGE;
         } catch (Exception ex) {
             System.out.println("Exception - " + ex);
             return "Error";
@@ -46,9 +46,9 @@ public class BankService {
                 bankCard.setBalance(updatedCardMoney);
                 //Save changes
                 repository.saveEntity(bankCard);
-                return STATUSCODE200_MASSAGE;
+                return STATUSCODE200_MESSAGE;
             }
-            return STATUSCODE404_MASSAGE;
+            return STATUSCODE404_MESSAGE;
         } catch (Exception ex) {
             System.out.println("Exception - " + ex);
             return "Error";
@@ -72,7 +72,7 @@ public class BankService {
                     int anotherNewBalanc = anotherBankCard.getBalance() + loadMoney;
                     anotherBankCard.setBalance(anotherNewBalanc);
                     repository.saveEntity(anotherBankCard);
-                    return STATUSCODE200_MASSAGE;
+                    return STATUSCODE200_MESSAGE;
                 }
             }
             return "Bank cards not found";
