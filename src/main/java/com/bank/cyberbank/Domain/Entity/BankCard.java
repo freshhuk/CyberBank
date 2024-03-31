@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class BankCard {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     int id;
     @Column(name = "numberCard")
     String NumberCard;
