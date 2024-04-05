@@ -26,7 +26,16 @@ public class UserController {
     }
 
 
-    //This method is used to create bank card
+    /**
+     * The end point for creating a bank card.
+     * Calls the CreateBankCard method which created a bank card model and entered its database
+     *
+     * @param nameOwnerCard Bank card owner's name
+     * @param lastNameOwnerCard Bank card owner's surname
+     *
+     * @return Depending on the result, adding an object to the database is the same.
+     * If everything goes well we get code 200, otherwise 400
+     */
     @PostMapping("/createBankCard")
     public ResponseEntity<String> createBankCard(@RequestParam String nameOwnerCard, @RequestParam String lastNameOwnerCard) {
         if (nameOwnerCard != null && lastNameOwnerCard != null) {
@@ -44,9 +53,9 @@ public class UserController {
     }
 
     @GetMapping("/bankCardInfo")
-    public ResponseEntity<BankCard> informationOfBankCard(@RequestParam String nameOwnerCard) {
-        if (nameOwnerCard != null) {
-            var bankCard = bankService.bankCardInfo(nameOwnerCard);
+    public ResponseEntity<BankCard> informationOfBankCard(@RequestParam String bankCardNumber) {
+        if (bankCardNumber != null) {
+            var bankCard = bankService.bankCardInfo(bankCardNumber);
             return (bankCard != null) ? ResponseEntity.ok(bankCard) : ResponseEntity.badRequest().build();
         } else {
             return ResponseEntity.badRequest().body(null);
@@ -85,9 +94,9 @@ public class UserController {
     }
 
     @PostMapping("/loadMoneyToAtherBankCard")
-    public ResponseEntity<String> loadMoneyToAtherBankCard(@RequestParam String nameOwnerCard, @RequestParam String atherNameCard, int money) {
-        if (nameOwnerCard != null && atherNameCard != null) {
-            var result = bankService.loadOwnMoneyInOtherCard(atherNameCard, nameOwnerCard, money);
+    public ResponseEntity<String> loadMoneyToAtherBankCard(@RequestParam String bankCardNumber, @RequestParam String atherNameCard, int money) {
+        if (bankCardNumber != null && atherNameCard != null) {
+            var result = bankService.loadOwnMoneyInOtherCard(atherNameCard, bankCardNumber, money);
             if (result.equals("Successful")) {
                 return ResponseEntity.ok().body("Money loaded at other card");
             } else if (result.equals("Bank cards not found")) {

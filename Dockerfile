@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-jdk-alpine
+FROM eclipse-temurin:21-jdk
 EXPOSE 8080
 VOLUME /tmp
 COPY target/CyberBank.jar app.jar
