@@ -4,6 +4,7 @@ import com.bank.cyberbank.Domain.Entity.BankCard;
 import com.bank.cyberbank.Domain.Models.BankCardDTO;
 import com.bank.cyberbank.Repositories.BankCardRepository;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,6 +23,27 @@ public class BankCardServiceTest {
     @Mock
     private BankCardRepository repository;
     private static final String STATUSCODE200_MESSAGE = "Successful";
+    private  BankCard testModelBankCard;
+    private BankCard testModelBankCardTwo;
+    @BeforeEach
+    void initModel() {
+        testModelBankCard = new BankCard();{
+            testModelBankCard.setNumberCard("4000 4000 4000 4000");
+            testModelBankCard.setCardCVV("123");
+            testModelBankCard.setNameOwnerCard("Test");
+            testModelBankCard.setId(1);
+            testModelBankCard.setLastNameOwnerCard("test");
+            testModelBankCard.setBalance(1000);
+        }
+        testModelBankCardTwo = new BankCard();{
+            testModelBankCardTwo.setNumberCard("4001 4000 4000 4000");
+            testModelBankCardTwo.setCardCVV("123");
+            testModelBankCardTwo.setNameOwnerCard("Test");
+            testModelBankCardTwo.setId(1);
+            testModelBankCardTwo.setLastNameOwnerCard("test");
+            testModelBankCardTwo.setBalance(1000);
+        }
+    }
 
     @Test
     void createBankCardTest() {
@@ -38,14 +60,7 @@ public class BankCardServiceTest {
     void removeBankCardTest() {
 
         String numberBankCard = "4000 4000 4000 4000";
-        BankCard testModelBankCard = new BankCard();
-        {
-            testModelBankCard.setNumberCard(numberBankCard);
-            testModelBankCard.setCardCVV("123");
-            testModelBankCard.setNameOwnerCard("Test");
-            testModelBankCard.setId(1);
-            testModelBankCard.setLastNameOwnerCard("test");
-        }
+
         Mockito.when(repository.GetBankCardByNumber(numberBankCard)).thenReturn(testModelBankCard);
 
         var result = controller.RemoveBankCard(numberBankCard);
@@ -56,27 +71,11 @@ public class BankCardServiceTest {
     @Test
     void getAllCardTest() {
 
-        BankCard testModelBankCard = new BankCard();
-        {
-            testModelBankCard.setNumberCard("4000 4000 4000 4000");
-            testModelBankCard.setCardCVV("123");
-            testModelBankCard.setNameOwnerCard("Test");
-            testModelBankCard.setId(1);
-            testModelBankCard.setLastNameOwnerCard("test");
-        }
-        BankCard testModelBankCard2 = new BankCard();
-        {
-            testModelBankCard.setNumberCard("4000 4000 4000 4000");
-            testModelBankCard.setCardCVV("123");
-            testModelBankCard.setNameOwnerCard("Test");
-            testModelBankCard.setId(1);
-            testModelBankCard.setLastNameOwnerCard("test");
-        }
-        Mockito.when(repository.AllCards()).thenReturn(List.of(testModelBankCard, testModelBankCard2));
+        Mockito.when(repository.AllCards()).thenReturn(List.of(testModelBankCard, testModelBankCardTwo));
 
         var result = controller.GetAllCard();
 
-        Assertions.assertEquals(result, List.of(testModelBankCard, testModelBankCard2));
+        Assertions.assertEquals(result, List.of(testModelBankCard, testModelBankCardTwo));
     }
 
     @Test
