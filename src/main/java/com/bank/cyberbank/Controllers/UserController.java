@@ -65,8 +65,7 @@ public class UserController {
 
     @PostMapping("/loadMoney")
     public ResponseEntity<String> loadMoneyToBankCard(
-            @RequestParam String bankCardNumber, @RequestParam int money
-    ) {
+            @RequestParam String bankCardNumber, @RequestParam int money) {
         if (bankCardNumber != null) {
             var resulr = bankService.LoadOwnMoney(bankCardNumber, money);
             if (resulr.equals("Successful")) {
