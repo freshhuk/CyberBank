@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Security data db ###
+
+###src/main/resources/hibernateconfig.cfg.xml
