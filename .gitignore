@@ -34,4 +34,4 @@ build/
 
 ### Security data db ###
 
-###src/main/resources/hibernateconfig.cfg.xml
+src/main/resources/hibernateconfig.cfg.xml

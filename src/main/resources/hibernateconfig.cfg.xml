@@ -1,9 +1,9 @@
 <hibernate-configuration>
     <session-factory>
         <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="connection.url">sicret</property>
-        <property name="connection.username">sicret</property>
-        <property name="connection.password">sicret</property>
+        <property name="connection.url">jdbc:postgresql://mypostgresql.cvkwiymisn6z.us-east-1.rds.amazonaws.com:5432/postgres</property>
+        <property name="connection.username">postgres</property>
+        <property name="connection.password">freshhukfresh</property>
 
 
         <mapping class="com.bank.cyberbank.Domain.Entity.BankCard"/>
