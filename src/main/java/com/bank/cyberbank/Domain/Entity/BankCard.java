@@ -12,10 +12,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Table(name = "bankcards")
-public class BankCard
-{
+public class BankCard {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "bankcard_seq_generator")
+    @SequenceGenerator(name="bankcard_seq_generator", sequenceName = "bankcards_seq", allocationSize=1)
     int id;
     @Column(name = "numberCard")
     String NumberCard;
