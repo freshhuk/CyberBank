@@ -21,7 +21,7 @@ public class BankService {
     public String LoadOwnMoney(String numberBankCard, int loadMoney) {
         try {
             var bankCard = repository.GetBankCardByNumber(numberBankCard);
-            if (bankCard != null) {
+            if (bankCard != null && loadMoney >= 0) {
                 //updating money
                 int updatedCardMoney = bankCard.getBalance() + loadMoney;
                 bankCard.setBalance(updatedCardMoney);
