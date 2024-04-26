@@ -52,6 +52,13 @@ public class UserController {
         }
     }
 
+    /**
+     * End point to find out information about a bank card.
+     * About the owner, balance, card number, etc.
+     * @param bankCardNumber card number by which the database will be searched
+     * @return If we get the correct card number, the program will find it and return status 200 and the object itself,
+     * if the card is not found or the number is written incorrectly, it will return error 400
+     */
     @GetMapping("/bankCardInfo")
     public ResponseEntity<BankCard> informationOfBankCard(@RequestParam String bankCardNumber) {
         if (bankCardNumber != null) {
@@ -63,6 +70,13 @@ public class UserController {
 
     }
 
+    /**
+     * Endpoint for loading money onto a bank card
+     * @param bankCardNumber Number of the card on which the money will be deposited
+     * @param money the amount of money that will be deposited into the account
+     * @return If we get the correct card number, the program will find it and return status 200 and the object itself,
+     *       if the card is not found or the number is written incorrectly, it will return error 400
+     */
     @PostMapping("/loadMoney")
     public ResponseEntity<String> loadMoneyToBankCard(
             @RequestParam String bankCardNumber, @RequestParam int money) {
