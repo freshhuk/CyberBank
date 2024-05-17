@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public class UserRepository {
 
     private final SessionFactory factory = new Configuration()
-            .configure("Adress")
+            .configure("hibernateconfigUser.cfg.xml")
             .addAnnotatedClass(User.class)
             .buildSessionFactory();
 
@@ -30,11 +30,11 @@ public class UserRepository {
             System.out.println("Model is null");
         }
     }
-    public User getUser(){
+    public User getUser(int id){
 
         return null;
     }
-    public void deleteUser(){
+    public void deleteUser(User user){
 
     }
     public void updateUser(User user){
