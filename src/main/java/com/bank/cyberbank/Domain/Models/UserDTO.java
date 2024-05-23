@@ -4,5 +4,8 @@ import lombok.Data;
 
 @Data
 public class UserDTO {
-    private String name;
+    int id;// id card which we chanche
+    private String new_login;
+    private String new_password;
+
 }
