@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 public class UserRepository {
 
     private final SessionFactory factory = new Configuration()
-            .configure("hibernateconfigUser.cfg.xml")
+            .configure("hibernateconfigRDS.cfg.xml")
             .addAnnotatedClass(User.class)
             .buildSessionFactory();
 
