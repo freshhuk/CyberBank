@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     //Todo create checking get name or last name for creating cards
+    // + writing system db debug? when you can start app without originaly db
+
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestParam String login, @RequestParam String password){
 
