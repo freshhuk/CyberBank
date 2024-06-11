@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
+    //Todo create checking get name or last name for creating cards
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestParam String login, @RequestParam String password){
 
