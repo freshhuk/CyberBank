@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(new AntPathRequestMatcher("/hello")).permitAll()//Маршруты разрешены без аунтентификации
-                        .requestMatchers(new AntPathRequestMatcher("/api/**")).authenticated())//Доступ к маршрутам начинающихся с /app под аунтнентификацияй
+                        .requestMatchers(new AntPathRequestMatcher("/api/**")).authenticated())//Доступ к маршрутам начинающихся с /api под аунтнентификацияй
                 .build();
     }
 

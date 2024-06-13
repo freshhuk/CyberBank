@@ -120,13 +120,4 @@ public class UserController {
             return ResponseEntity.badRequest().body("Error: Invalid bank card name");
         }
     }
-
-    /**
-     * This method created for test api
-     * @return text - hello
-     */
-    @GetMapping("/hello")
-    public ResponseEntity<String> welcomeMassage(){
-        return ResponseEntity.ok("Hello");
-    }
 }
