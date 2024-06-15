@@ -24,11 +24,12 @@ public class SecurityConfig {
 
         return null;
     }
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(new AntPathRequestMatcher("/hello")).permitAll()//Маршруты разрешены без аунтентификации
+                        .requestMatchers(new AntPathRequestMatcher("/auth/**")).permitAll()//Маршруты разрешены без аунтентификации
                         .requestMatchers(new AntPathRequestMatcher("/api/**")).authenticated())//Доступ к маршрутам начинающихся с /api под аунтнентификацияй
                 .build();
     }
