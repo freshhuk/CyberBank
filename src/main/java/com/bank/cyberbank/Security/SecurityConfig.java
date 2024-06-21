@@ -1,5 +1,6 @@
 package com.bank.cyberbank.Security;
 
+import com.bank.cyberbank.Repositories.UserRepository;
 import jakarta.servlet.FilterChain;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,16 +22,15 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(PasswordEncoder encoder){
-
-        return null;
+        return new MyUserDetailsService(new UserRepository());
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(new AntPathRequestMatcher("/auth/**")).permitAll()//Маршруты разрешены без аунтентификации
-                        .requestMatchers(new AntPathRequestMatcher("/api/**")).authenticated())//Доступ к маршрутам начинающихся с /api под аунтнентификацияй
+                        .requestMatchers("/auth/**").permitAll()//Маршруты разрешены без аунтентификации
+                        .requestMatchers("/api/**").authenticated())//Доступ к маршрутам начинающихся с /api под аунтнентификацияй
                 .build();
     }
 

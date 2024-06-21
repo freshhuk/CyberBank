@@ -5,6 +5,7 @@ import com.bank.cyberbank.Domain.Models.BankCardDTO;
 import com.bank.cyberbank.Services.BankCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
 This class for end point for user
  */
 @RestController
+@PreAuthorize("hasAuthority('ADMIN')")
 @RequestMapping("/api/admin")
 public class AdminController {
 
