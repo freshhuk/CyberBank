@@ -8,6 +8,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class UserRepository {
 
@@ -68,12 +70,12 @@ public class UserRepository {
         }
     }
 
-    public User getUserByLogin(String login) {
+    public Optional<User> getUserByLogin(String login) {
         try (Session session = factory.openSession()) {
             session.beginTransaction();
             Query query = session.createQuery("from User where login =:  login");
             query.setParameter("login", login);
-            User model = (User) query.uniqueResult();
+            Optional<User> model = (Optional<User>) query.uniqueResult();
             session.getTransaction().commit();
             return model;
         }catch (Exception ex) {
