@@ -14,7 +14,7 @@ import java.util.Optional;
 public class UserRepository {
 
     private final SessionFactory factory = new Configuration()
-            .configure("hibernateconfigRDS.cfg.xml")
+            .configure("hibernateconfigDebug.cfg.xml")//For prod hibernateconfigRDS for debug hibernateconfigDebug
             .addAnnotatedClass(User.class)
             .buildSessionFactory();
 
