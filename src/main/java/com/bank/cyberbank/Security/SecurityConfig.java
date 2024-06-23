@@ -1,7 +1,6 @@
 package com.bank.cyberbank.Security;
 
 import com.bank.cyberbank.Repositories.UserRepository;
-import jakarta.servlet.FilterChain;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * This config for auth in project
@@ -29,8 +27,11 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()//Маршруты разрешены без аунтентификации
-                        .requestMatchers("/api/**").authenticated())//Доступ к маршрутам начинающихся с /api под аунтнентификацияй
+                        .requestMatchers("/auth/**").permitAll()//End point permit without auth
+                        .requestMatchers("/loginPage.html").permitAll() // Permit access to your HTML page
+                        .requestMatchers("/registerPage.html").permitAll() // Permit access to your HTML page
+                        .requestMatchers("/api/**").authenticated())//end points with auth
+
                 .build();
     }
 
