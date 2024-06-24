@@ -17,19 +17,24 @@ public class UserRepository {
             .configure("hibernateconfigDebug.cfg.xml")//For prod hibernateconfigRDS for debug hibernateconfigDebug
             .addAnnotatedClass(User.class)
             .buildSessionFactory();
+    private static final String STATUSCODE200_MESSAGE = "Successful";
+
 
     /* CRUD operation */
-    public void addUser(User user){
+    public String addUser(User user){
         if(user != null){
             try(Session session = factory.openSession()){
                 session.beginTransaction();
                 session.persist(user);
                 session.getTransaction().commit();
+                return STATUSCODE200_MESSAGE;
             } catch (Exception ex){
-                System.out.println("Error with operation");
+                System.out.println("Error with operation" + ex);
+                return "Error";
             }
         } else{
             System.out.println("Model is null");
+            return "Model is null";
         }
     }
     public User getUser(int id){

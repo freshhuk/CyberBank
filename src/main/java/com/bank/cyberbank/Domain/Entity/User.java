@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "users_seq_generator")
-    @SequenceGenerator(name="users_seq_generator", sequenceName = "users_seq", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
+    @SequenceGenerator(name = "user_seq", sequenceName = "user_sequence", allocationSize = 1)
     @Column(name="id")
     private int id;
 
@@ -26,6 +26,7 @@ public class User {
     @Column(name="password")
     private String password;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="role")
     private Role role;
 }

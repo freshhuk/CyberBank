@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLOutput;
+
 /**
  * End point for aoth methods
  * Login, register, logout
@@ -25,12 +27,12 @@ public class AuthController {
     public ResponseEntity<String> register(@RequestParam String login, @RequestParam String password, @RequestParam String confirmPassword){
 
         String result = authService.register(login, password, confirmPassword);
-        if(result.equals("Successful")){
-            return ResponseEntity.ok().body("Register Successful");
-        }
-        else{
-            return ResponseEntity.badRequest().body("Register error");
-        }
+        return switch (result) {
+            case "Successful" -> ResponseEntity.ok().body("Register Successful");
+            case "Error" -> ResponseEntity.badRequest().body("Error with opertion");
+            case "Model is null" -> ResponseEntity.badRequest().body("Model is null");
+            default -> ResponseEntity.badRequest().body("Register error");
+        };
     }
     @PostMapping("/login")
 
