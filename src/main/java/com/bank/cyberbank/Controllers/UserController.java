@@ -15,7 +15,7 @@ This class for end point for user
 
  */
 @RestController
-@PreAuthorize("hasAuthority('USER') && hasAuthority('ADMIN')")
+@PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
 @RequestMapping("/api/user")
 public class UserController {
     private final BankService bankService;
@@ -121,5 +121,9 @@ public class UserController {
         } else {
             return ResponseEntity.badRequest().body("Error: Invalid bank card name");
         }
+    }
+    @GetMapping("/lol")
+    public String Hello(){
+        return "Hello amigo";
     }
 }

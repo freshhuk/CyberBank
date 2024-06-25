@@ -3,9 +3,12 @@ package com.bank.cyberbank.Controllers;
 import com.bank.cyberbank.Services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLOutput;
+import java.util.Collection;
 
 /**
  * End point for aoth methods
@@ -57,6 +60,15 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Logout error");
         }
     }
+    @GetMapping("/checkRoles")
+    public String checkRoles(Authentication authentication) {
+        if (authentication == null) {
+            return "Not authenticated";
+        }
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        return "Roles: " + authorities.toString();
+    }
+
     /**
      * This method created for test api
      * @return text - hello

@@ -78,14 +78,14 @@ public class UserRepository {
     public Optional<User> getUserByLogin(String login) {
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            Query query = session.createQuery("from User where login =:  login");
+            Query<User> query = session.createQuery("from User where login = :login", User.class);
             query.setParameter("login", login);
-            Optional<User> model = (Optional<User>) query.uniqueResult();
+            User user = query.uniqueResult();
             session.getTransaction().commit();
-            return model;
-        }catch (Exception ex) {
-            System.out.println("Error method GetBankCardByNumber" + ex);
-            return null;
+            return Optional.ofNullable(user);
+        } catch (Exception ex) {
+            System.out.println("Error method getUserByLogin" + ex);
+            return Optional.empty();
         }
     }
     public void saveEntity(User user) {
