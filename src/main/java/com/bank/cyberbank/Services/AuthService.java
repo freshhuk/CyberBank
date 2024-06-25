@@ -4,8 +4,15 @@ import com.bank.cyberbank.Domain.Entity.User;
 import com.bank.cyberbank.Domain.Enums.Role;
 import com.bank.cyberbank.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.sql.SQLOutput;
 
 
 /**
@@ -18,11 +25,13 @@ public class AuthService {
 
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
 
     @Autowired
-    public  AuthService(UserRepository repository, PasswordEncoder passwordEncoder){
+    public  AuthService(UserRepository repository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager){
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
     }
 
     //Todo create checking get name or last name for creating cards
@@ -61,8 +70,16 @@ public class AuthService {
     }
 
     public String login(String login, String password){
-
-        return STATUSCODE200_MESSAGE;
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(login, password)
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return STATUSCODE200_MESSAGE;
+        } catch (AuthenticationException e) {
+            System.out.println("Login failed: " + e.getMessage());
+            return "Error";
+        }
     }
     public String logout(){
 
