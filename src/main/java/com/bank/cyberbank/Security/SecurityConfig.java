@@ -6,11 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -37,7 +35,16 @@ public class SecurityConfig {
                         .requestMatchers("/loginPage.html").permitAll() // Permit access to your HTML page
                         .requestMatchers("/registerPage.html").permitAll() // Permit access to your HTML page
                         .requestMatchers("/api/**").authenticated())//end points with auth
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+                .formLogin( login -> login
+                        .loginPage("/loginPage.html")
+                        .defaultSuccessUrl("/api/user/welcome", true) // Redirect to /api/user/welcome after successful login
+                        .permitAll())
+                //logout end point
+                .logout(logout -> logout
+                                .logoutUrl("/logout")
+                                .logoutSuccessUrl("/login")
+                                .invalidateHttpSession(true)
+                                .deleteCookies("JSESSIONID"))
                 .build();
     }
     @Bean
@@ -48,14 +55,11 @@ public class SecurityConfig {
         return provider;
     }
 
+    /* Bean for PasswordEncoder, in order to return BCryptEncoder */
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
-    }
 
 }

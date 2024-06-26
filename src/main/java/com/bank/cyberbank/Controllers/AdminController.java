@@ -1,7 +1,9 @@
 package com.bank.cyberbank.Controllers;
 
 import com.bank.cyberbank.Domain.Entity.BankCard;
+import com.bank.cyberbank.Domain.Entity.User;
 import com.bank.cyberbank.Domain.Models.BankCardDTO;
+import com.bank.cyberbank.Services.AuthService;
 import com.bank.cyberbank.Services.BankCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +20,15 @@ This class for end point for user
 public class AdminController {
 
     private final BankCardService bankCardService;
+    private final AuthService authService;
 
     @Autowired
-    public AdminController(BankCardService bankCardService) {
+    public AdminController(BankCardService bankCardService, AuthService authService) {
         this.bankCardService = bankCardService;
+        this.authService = authService;
     }
 
-    @GetMapping("/getAllUser")
+    @GetMapping("/getAllCards")
     public ResponseEntity<List<BankCard>> checkAllUserInfo() {
         try {
             List<BankCard> cards = bankCardService.GetAllCard();
@@ -32,11 +36,10 @@ public class AdminController {
         } catch (Exception ex) {
             return ResponseEntity.badRequest().body(null);
         }
-
     }
 
     @DeleteMapping("/deleteUserCard")
-    public ResponseEntity<String> deleteUser(@RequestParam String bankCardNumber) {
+    public ResponseEntity<String> deleteUserCard(@RequestParam String bankCardNumber) {
         String result = bankCardService.RemoveBankCard(bankCardNumber);
 
         if (result.equals("Successful")) {
@@ -47,8 +50,8 @@ public class AdminController {
         return ResponseEntity.badRequest().body("Error");
     }
 
-    @PutMapping("/changeDataUser")
-    public ResponseEntity<String> changeDataUser(@RequestBody BankCardDTO bankCard) {
+    @PutMapping("/changeDataCard")
+    public ResponseEntity<String> changeDataCard(@RequestBody BankCardDTO bankCard) {
         String result = bankCardService.UpdateOwnerCard(bankCard);
         if (result.equals("Successful")) {
             return ResponseEntity.ok().body("User data was changed");
@@ -56,6 +59,16 @@ public class AdminController {
             return ResponseEntity.badRequest().body("Bank card DTO is null");
         }
         return ResponseEntity.badRequest().body("Error");
+    }
+    //Action with user
+    @GetMapping("/getAllUsers")
+    public ResponseEntity<List<User>> getAllUsers(){
+        try {
+            List<User> cards = authService.getUsers();
+            return ResponseEntity.ok().body(cards);
+        } catch (Exception ex) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
 }
