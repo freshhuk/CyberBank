@@ -67,6 +67,7 @@ public class AdminController {
             List<User> cards = authService.getUsers();
             return ResponseEntity.ok().body(cards);
         } catch (Exception ex) {
+            System.out.println("Error with get user"); // todo
             return ResponseEntity.badRequest().body(null);
         }
     }
