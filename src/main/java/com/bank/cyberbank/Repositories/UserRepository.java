@@ -1,5 +1,6 @@
 package com.bank.cyberbank.Repositories;
 
+import com.bank.cyberbank.Domain.Entity.BankCard;
 import com.bank.cyberbank.Domain.Entity.User;
 import com.bank.cyberbank.Domain.Models.UserDTO;
 import org.hibernate.Session;
@@ -8,6 +9,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -37,16 +39,18 @@ public class UserRepository {
             return "Model is null";
         }
     }
-    public User getUser(int id){
-        try(Session session = factory.openSession()){
+
+    public List<User> getAllUsers() {
+        try (Session session = factory.openSession()) {
             session.beginTransaction();
-            var userModel = session.get(User.class, id);
+            var users = session.createQuery("from User ", User.class).getResultList();
             session.getTransaction().commit();
-            return userModel;
+            return users;
         } catch (Exception ex) {
-            System.out.println("Error with operation");
+            System.out.println("AllCards method error" + ex);
             return null;
         }
+
     }
     public void deleteUser(int id){
         try(Session session = factory.openSession()){
