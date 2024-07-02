@@ -79,9 +79,9 @@ public class BankCardRepository {
     public BankCard GetBankCardByNumber(String numbercard) {
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            Query query = session.createQuery("from BankCard where NumberCard =:  NumberCard");
+            Query<BankCard> query = session.createQuery("from BankCard where NumberCard =:  NumberCard", BankCard.class);
             query.setParameter("NumberCard", numbercard);
-            BankCard model = (BankCard) query.uniqueResult();
+            BankCard model = query.uniqueResult();
             session.getTransaction().commit();
             return model;
         }catch (Exception ex) {

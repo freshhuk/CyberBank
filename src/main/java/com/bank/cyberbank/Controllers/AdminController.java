@@ -3,6 +3,7 @@ package com.bank.cyberbank.Controllers;
 import com.bank.cyberbank.Domain.Entity.BankCard;
 import com.bank.cyberbank.Domain.Entity.User;
 import com.bank.cyberbank.Domain.Models.BankCardDTO;
+import com.bank.cyberbank.Domain.Models.UserDTO;
 import com.bank.cyberbank.Services.AuthService;
 import com.bank.cyberbank.Services.BankCardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,14 +55,14 @@ public class AdminController {
     public ResponseEntity<String> changeDataCard(@RequestBody BankCardDTO bankCard) {
         String result = bankCardService.UpdateOwnerCard(bankCard);
         if (result.equals("Successful")) {
-            return ResponseEntity.ok().body("User data was changed");
+            return ResponseEntity.ok().body("Card data was changed");
         } else if (result.equals("Model is null")) {
             return ResponseEntity.badRequest().body("Bank card DTO is null");
         }
         return ResponseEntity.badRequest().body("Error");
     }
     //Action with user
-    @GetMapping("/getAllUsers")
+    @GetMapping("/getAllUsers") // todo
     public ResponseEntity<List<User>> getAllUsers(){
         try {
             List<User> cards = authService.getUsers();
@@ -71,5 +72,19 @@ public class AdminController {
             return ResponseEntity.badRequest().body(null);
         }
     }
-
+    @PostMapping("/deleteUser/{id}")//todo ckeck correct id
+    public ResponseEntity<String> deleteUser(@RequestParam int id){
+        String result = authService.deleteUser(id);
+        return result.equals("Successful") ? ResponseEntity.ok().body("User deleted") : ResponseEntity.badRequest().body("Error, user didn't delete");
+    }
+    @PutMapping("/updateUser")
+    public ResponseEntity<String> updateUser(@RequestBody UserDTO userModel){
+        String result = authService.updateUser(userModel);
+        if (result.equals("Successful")) {
+            return ResponseEntity.ok().body("User data was changed");
+        } else if (result.equals("Model is null")) {
+            return ResponseEntity.badRequest().body("User DTO is null");
+        }
+        return ResponseEntity.badRequest().body("Error");
+    }
 }
