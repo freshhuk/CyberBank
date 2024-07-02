@@ -2,6 +2,7 @@ package com.bank.cyberbank.Services;
 
 import com.bank.cyberbank.Domain.Entity.User;
 import com.bank.cyberbank.Domain.Enums.Role;
+import com.bank.cyberbank.Domain.Models.UserDTO;
 import com.bank.cyberbank.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -61,12 +62,36 @@ public class AuthService {
             return "Error with register";
         }
     }
-    public List<User> getUsers(){
+    public List<User> getUsers(){//todo
         try {
             return repository.getAllUsers();
         } catch (Exception ex) {
             System.out.println("Exception - " + ex);
             return null;
+        }
+    }
+    public String deleteUser(int id){
+        try{
+            repository.deleteUser(id);
+            return STATUSCODE200_MESSAGE;
+        }
+        catch(Exception ex){
+            System.out.println("Error with operation " + ex);
+            return "Error";
+        }
+    }
+    public String updateUser(UserDTO userDTO){
+        try{
+            if(userDTO != null){
+                repository.updateUser(userDTO);
+                return STATUSCODE200_MESSAGE;
+            }
+            else {
+                return "Model is null";
+            }
+        } catch (Exception ex){
+            System.out.println("Error with operation + " + ex);
+            return "Error";
         }
     }
 

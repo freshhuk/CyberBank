@@ -1,6 +1,5 @@
 package com.bank.cyberbank.Repositories;
 
-import com.bank.cyberbank.Domain.Entity.BankCard;
 import com.bank.cyberbank.Domain.Entity.User;
 import com.bank.cyberbank.Domain.Models.UserDTO;
 import org.hibernate.Session;
@@ -90,15 +89,6 @@ public class UserRepository {
         } catch (Exception ex) {
             System.out.println("Error method getUserByLogin" + ex);
             return Optional.empty();
-        }
-    }
-    public void saveEntity(User user) {
-        try (Session session = factory.openSession()) {
-            session.beginTransaction();
-            session.merge(user); // we use marge for update own entity
-            session.getTransaction().commit();
-        }catch (Exception ex) {
-            System.out.println("Error with save" + ex);
         }
     }
 }
