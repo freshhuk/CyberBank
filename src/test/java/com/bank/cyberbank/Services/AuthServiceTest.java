@@ -1,6 +1,7 @@
 package com.bank.cyberbank.Services;
 
 import com.bank.cyberbank.Domain.Entity.User;
+import com.bank.cyberbank.Domain.Models.UserDTO;
 import com.bank.cyberbank.Repositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -84,5 +85,36 @@ public class AuthServiceTest {
         Assertions.assertEquals("Error with register", result);
     }
 
+    @Test
+    void deleteTest(){
 
+        String result = service.deleteUser(1);
+
+        Assertions.assertEquals(result, STATUSCODE200_MESSAGE);
+
+    }
+
+    @Test
+    void updateUserTest(){
+
+        UserDTO userTest = new UserDTO();
+        userTest.setId(1);
+        userTest.setNew_login("Test");
+        userTest.setNew_password("123");
+
+        String result = service.updateUser(userTest);
+
+        Assertions.assertEquals(result, STATUSCODE200_MESSAGE);
+    }
+    @Test
+    void updateUserWhenUserNullTest(){
+        String result = service.updateUser(null);
+
+        Assertions.assertEquals(result, "Model is null");
+    }
+
+    @Test
+    void getUsersTest(){
+
+    }
 }
