@@ -6,6 +6,7 @@ import com.bank.cyberbank.Services.BankCardService;
 import com.bank.cyberbank.Services.BankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /*
@@ -14,6 +15,7 @@ This class for end point for user
 
  */
 @RestController
+@PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
 @RequestMapping("/api/user")
 public class UserController {
     private final BankService bankService;
@@ -120,13 +122,8 @@ public class UserController {
             return ResponseEntity.badRequest().body("Error: Invalid bank card name");
         }
     }
-
-    /**
-     * This method created for test api
-     * @return text - hello
-     */
-    @GetMapping("/hello")
-    public ResponseEntity<String> welcomeMassage(){
-        return ResponseEntity.ok("Hello");
+    @GetMapping("/welcome")
+    public String welcomeMessage(){
+        return "Welcome , user!";
     }
 }

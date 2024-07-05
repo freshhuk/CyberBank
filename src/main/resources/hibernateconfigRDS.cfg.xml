@@ -1,0 +1,13 @@
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://mypostgresql.cvkwiymisn6z.us-east-1.rds.amazonaws.com:5432/postgres</property>
+        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.connection.password">freshhukfresh</property>
+
+
+        <!-- Mapping clases -->
+        <mapping class="com.bank.cyberbank.Domain.Entity.User"/>
+        <mapping class="com.bank.cyberbank.Domain.Entity.BankCard"/>
+    </session-factory>
+</hibernate-configuration>
