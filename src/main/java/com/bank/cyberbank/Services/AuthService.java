@@ -62,7 +62,7 @@ public class AuthService {
             return "Error with register";
         }
     }
-    public List<User> getUsers(){//todo
+    public List<User> getUsers(){
         try {
             return repository.getAllUsers();
         } catch (Exception ex) {

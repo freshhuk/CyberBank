@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public class BankCardRepository {
     private final SessionFactory factory = new Configuration()
-            .configure("hibernateconfigDebug.cfg.xml")//For prod hibernateconfigRDS for debug hibernateconfigDebug
+            .configure("hibernateconfigRDS.cfg.xml")//For prod hibernateconfigRDS for debug hibernateconfigDebug
             .addAnnotatedClass(BankCard.class)
             .buildSessionFactory();
 

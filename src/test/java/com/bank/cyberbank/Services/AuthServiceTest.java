@@ -1,6 +1,7 @@
 package com.bank.cyberbank.Services;
 
 import com.bank.cyberbank.Domain.Entity.User;
+import com.bank.cyberbank.Domain.Enums.Role;
 import com.bank.cyberbank.Domain.Models.UserDTO;
 import com.bank.cyberbank.Repositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
@@ -11,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
 
@@ -115,6 +118,26 @@ public class AuthServiceTest {
 
     @Test
     void getUsersTest(){
+        User model1 = new User();
+        User model2 = new User();
+        {
+            model1.setId(1);
+            model1.setPassword("Test");
+            model1.setLogin("Test");
+            model1.setRole(Role.USER);
 
+            model2.setId(2);
+            model2.setPassword("Test2");
+            model2.setLogin("Admin");
+            model2.setRole(Role.ADMIN);
+        }
+
+        Mockito.when(repository.getAllUsers()).thenReturn(List.of(model1, model2));
+
+        List<User> resultList = service.getUsers();
+
+        Assertions.assertEquals(resultList, List.of(model1, model2));
+        Assertions.assertEquals(resultList.get(1).getRole(), Role.ADMIN);
+        Assertions.assertNotNull(resultList);
     }
 }

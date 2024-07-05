@@ -76,6 +76,7 @@ public class BankCardServiceTest {
         var result = controller.GetAllCard();
 
         Assertions.assertEquals(result, List.of(testModelBankCard, testModelBankCardTwo));
+        Assertions.assertNotNull(result);
     }
 
     @Test

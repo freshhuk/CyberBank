@@ -62,18 +62,19 @@ public class AdminController {
         return ResponseEntity.badRequest().body("Error");
     }
     //Action with user
-    @GetMapping("/getAllUsers") // todo
+    @GetMapping("/getAllUsers")
     public ResponseEntity<List<User>> getAllUsers(){
         try {
             List<User> cards = authService.getUsers();
+
             return ResponseEntity.ok().body(cards);
         } catch (Exception ex) {
-            System.out.println("Error with get user"); // todo
+            System.out.println("Error with get user");
             return ResponseEntity.badRequest().body(null);
         }
     }
-    @PostMapping("/deleteUser/{id}")//todo ckeck correct id
-    public ResponseEntity<String> deleteUser(@RequestParam int id){
+    @PostMapping("/deleteUser/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable  int id){
         String result = authService.deleteUser(id);
         return result.equals("Successful") ? ResponseEntity.ok().body("User deleted") : ResponseEntity.badRequest().body("Error, user didn't delete");
     }
