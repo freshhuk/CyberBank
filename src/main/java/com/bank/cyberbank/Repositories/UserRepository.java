@@ -15,7 +15,7 @@ import java.util.Optional;
 public class UserRepository {
 
     private final SessionFactory factory = new Configuration()
-            .configure("hibernateconfigDebug.cfg.xml")//For prod hibernateconfigRDS for debug hibernateconfigDebug
+            .configure("hibernateconfigRDS.cfg.xml")//For prod hibernateconfigRDS for debug hibernateconfigDebug
             .addAnnotatedClass(User.class)
             .buildSessionFactory();
     private static final String STATUSCODE200_MESSAGE = "Successful";
@@ -46,7 +46,7 @@ public class UserRepository {
             session.getTransaction().commit();
             return users;
         } catch (Exception ex) {
-            System.out.println("AllCards method error" + ex);
+            System.out.println("Allusers method error" + ex);
             return null;
         }
 
