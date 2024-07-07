@@ -29,7 +29,7 @@ public class AuthService {
 
     public String register(String login, String password, String confirmPassword){
         try{
-            if (password.equals(confirmPassword)){
+            if (password.equals(confirmPassword) && isValidLogin(login)){
                 User user = new User();
                 {
 
@@ -95,5 +95,8 @@ public class AuthService {
         }
     }
 
-
+    private boolean isValidLogin(String login){
+        var user = repository.getUserByLogin(login);
+        return user.isEmpty();
+    }
 }
