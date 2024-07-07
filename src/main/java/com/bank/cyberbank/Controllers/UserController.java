@@ -109,7 +109,7 @@ public class UserController {
     }
 
     @PostMapping("/loadMoneyToAtherBankCard")
-    public ResponseEntity<String> loadMoneyToAtherBankCard(@RequestParam String bankCardNumber, @RequestParam String atherNameCard, int money) {
+    public ResponseEntity<String> loadMoneyToOtherBankCard(@RequestParam String bankCardNumber, @RequestParam String atherNameCard, int money) {
         if (bankCardNumber != null && atherNameCard != null) {
             var result = bankService.loadOwnMoneyInOtherCard(atherNameCard, bankCardNumber, money);
             if (result.equals("Successful")) {

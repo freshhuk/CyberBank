@@ -30,7 +30,7 @@ public class AdminController {
     }
 
     @GetMapping("/getAllCards")
-    public ResponseEntity<List<BankCard>> checkAllUserInfo() {
+    public ResponseEntity<List<BankCard>> checkAllCardInfo() {
         try {
             List<BankCard> cards = bankCardService.GetAllCard();
             return ResponseEntity.ok().body(cards);
@@ -46,7 +46,7 @@ public class AdminController {
         if (result.equals("Successful")) {
             return ResponseEntity.ok().body("User deleted");
         } else if (result.equals("BankCard_Number is null")) {
-            return ResponseEntity.badRequest().body("User not found");
+            return ResponseEntity.badRequest().body("User card not found");
         }
         return ResponseEntity.badRequest().body("Error");
     }
